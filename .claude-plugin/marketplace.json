@@ -6,7 +6,7 @@
   },
   "description": "A safe, free, self-hosted disk-cleanup skill for Claude Code — reclaim disk space without paying for CleanMyMac, DaisyDisk, or BleachBit.",
   "metadata": {
-    "version": "1.0.0"
+    "version": "1.0.1"
   },
   "plugins": [
     {

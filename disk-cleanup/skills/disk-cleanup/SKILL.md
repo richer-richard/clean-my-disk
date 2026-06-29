@@ -108,6 +108,12 @@ on the protected list. If those two ideas ever conflict, these rules win.
 6. **Verify and report.** Record free space after. Write `disk-cleanup-report.md`
    (template at the end). Show the user the report.
 
+> Shell-portability note: the delete commands use `find <dir> -mindepth 1 -maxdepth 1
+> -exec rm -rf {} +` rather than `rm -rf <dir>/*`. A bare `<dir>/*` glob aborts with
+> `no matches found` under zsh (the default macOS shell) when the directory is empty,
+> and `2>/dev/null` cannot suppress that shell-level error. The `find` form is safe
+> across bash and zsh and under `set -e`.
+
 ## macOS commands
 
 Tier 0 (auto, regenerates):
@@ -115,7 +121,7 @@ Tier 0 (auto, regenerates):
 # User caches: clear contents, keep the directory
 find ~/Library/Caches -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null
 # Xcode build products
-rm -rf ~/Library/Developer/Xcode/DerivedData/* 2>/dev/null
+find ~/Library/Developer/Xcode/DerivedData -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null
 # Toolchain caches via their own cleaners
 command -v brew  >/dev/null && brew cleanup -s && brew autoremove
 command -v npm   >/dev/null && npm cache clean --force
@@ -125,15 +131,15 @@ command -v pip3  >/dev/null && pip3 cache purge
 command -v go    >/dev/null && go clean -cache
 # Cargo: prefer cargo-cache; fall back to removing the re-fetchable registry cache
 if command -v cargo-cache >/dev/null; then cargo cache --autoclean
-else rm -rf ~/.cargo/registry/cache/* ~/.cargo/registry/src/* 2>/dev/null; fi
+else find ~/.cargo/registry/cache ~/.cargo/registry/src -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null; fi
 ```
 
 Tier 1 (auto, irreversible):
 ```bash
-rm -rf ~/.Trash/* 2>/dev/null                                   # empty Trash
-find ~/Library/Logs -type f -mtime +7 -delete 2>/dev/null       # logs older than 7d
-rm -rf ~/Library/Developer/Xcode/iOS\ DeviceSupport/* 2>/dev/null
-command -v xcrun >/dev/null && xcrun simctl delete unavailable   # dead simulators
+find ~/.Trash -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null      # empty Trash
+find ~/Library/Logs -type f -mtime +7 -delete 2>/dev/null               # logs older than 7d
+find ~/Library/Developer/Xcode/iOS\ DeviceSupport -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null
+command -v xcrun >/dev/null && xcrun simctl delete unavailable           # dead simulators
 ```
 
 Tier 2 (opt-in only):
@@ -155,12 +161,12 @@ command -v pnpm >/dev/null && pnpm store prune
 command -v pip3 >/dev/null && pip3 cache purge
 command -v go   >/dev/null && go clean -cache
 if command -v cargo-cache >/dev/null; then cargo cache --autoclean
-else rm -rf ~/.cargo/registry/cache/* ~/.cargo/registry/src/* 2>/dev/null; fi
+else find ~/.cargo/registry/cache ~/.cargo/registry/src -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null; fi
 ```
 
 Tier 1 (auto, irreversible):
 ```bash
-rm -rf ~/.local/share/Trash/* 2>/dev/null
+find ~/.local/share/Trash -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null
 ```
 
 Tier 2 (opt-in only; detect the distro via /etc/os-release):

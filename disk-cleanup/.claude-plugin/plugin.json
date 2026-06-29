@@ -1,7 +1,7 @@
 {
   "name": "disk-cleanup",
   "displayName": "Disk Cleanup",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Safe, cross-platform disk space reclamation for Claude Code — a free alternative to CleanMyMac, DaisyDisk, and BleachBit. Scans read-only, reports reclaimable space by tier, then deletes only allowlisted, regenerable caches, temp files, and trash.",
   "author": {
     "name": "richer-richard",

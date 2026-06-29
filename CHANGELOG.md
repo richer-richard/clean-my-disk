@@ -3,6 +3,17 @@
 All notable changes to the `disk-cleanup` skill are documented here.
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.0.1] - 2026-06-29
+
+### Fixed
+- zsh portability: the per-OS delete commands now use
+  `find <dir> -mindepth 1 -maxdepth 1 -exec rm -rf {} +` instead of `rm -rf <dir>/*`
+  for Xcode DerivedData, Trash (macOS + Linux), the cargo registry fallback, and
+  Xcode iOS DeviceSupport. A bare `<dir>/*` glob aborts with `no matches found`
+  under zsh (the default macOS shell) when the directory is empty — and `2>/dev/null`
+  cannot suppress that shell-level error. The `find` form is safe across bash/zsh
+  and under `set -e`. Found by running the installed plugin end-to-end.
+
 ## [1.0.0] - 2026-06-29
 
 ### Added
