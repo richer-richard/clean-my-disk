@@ -1,5 +1,7 @@
 # clean-my-disk
 
+[![validate](https://github.com/richer-richard/clean-my-disk/actions/workflows/validate.yml/badge.svg)](https://github.com/richer-richard/clean-my-disk/actions/workflows/validate.yml)
+
 **A safe, free disk-cleanup skill for [Claude Code](https://claude.com/claude-code).**
 Reclaim disk space on **macOS, Linux, and Windows** — without paying for CleanMyMac,
 DaisyDisk, or BleachBit. Install it once, then just tell Claude *"my disk is full"*.

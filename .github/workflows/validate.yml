@@ -1,0 +1,42 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: manifests · scanner · safety
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Validate manifests, frontmatter, scanner, safety invariants
+        run: python3 .github/validate.py
+
+  cli-validate:
+    name: claude plugin validate --strict (best-effort)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code || true
+      - name: claude plugin validate --strict
+        run: |
+          if command -v claude >/dev/null 2>&1; then
+            claude plugin validate ./disk-cleanup --strict
+            claude plugin validate . --strict
+          else
+            echo "claude CLI unavailable on this runner; the 'validate' job is the gate."
+          fi
