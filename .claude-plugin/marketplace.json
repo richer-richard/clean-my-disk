@@ -1,0 +1,19 @@
+{
+  "name": "clean-my-disk",
+  "owner": {
+    "name": "richer-richard",
+    "url": "https://github.com/richer-richard"
+  },
+  "description": "A safe, free, self-hosted disk-cleanup skill for Claude Code — reclaim disk space without paying for CleanMyMac, DaisyDisk, or BleachBit.",
+  "metadata": {
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "disk-cleanup",
+      "source": "./disk-cleanup",
+      "description": "Scans read-only, reports reclaimable space by tier, and safely deletes only allowlisted regenerable caches, temp files, and trash on macOS, Linux, and Windows.",
+      "keywords": ["disk", "cleanup", "storage", "cache", "free-space"]
+    }
+  ]
+}

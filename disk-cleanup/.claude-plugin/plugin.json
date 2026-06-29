@@ -1,0 +1,30 @@
+{
+  "name": "disk-cleanup",
+  "displayName": "Disk Cleanup",
+  "version": "1.0.0",
+  "description": "Safe, cross-platform disk space reclamation for Claude Code — a free alternative to CleanMyMac, DaisyDisk, and BleachBit. Scans read-only, reports reclaimable space by tier, then deletes only allowlisted, regenerable caches, temp files, and trash.",
+  "author": {
+    "name": "richer-richard",
+    "url": "https://github.com/richer-richard"
+  },
+  "homepage": "https://github.com/richer-richard/clean-my-disk#readme",
+  "repository": "https://github.com/richer-richard/clean-my-disk",
+  "license": "MIT",
+  "keywords": [
+    "disk",
+    "cleanup",
+    "storage",
+    "cache",
+    "free-space",
+    "cleanmymac",
+    "daisydisk",
+    "bleachbit",
+    "macos",
+    "linux",
+    "windows",
+    "docker",
+    "trash",
+    "temp"
+  ],
+  "skills": "./skills/"
+}

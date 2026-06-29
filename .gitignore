@@ -1,0 +1,10 @@
+# Personal / machine-specific — never publish
+CLAUDE.local.md
+disk-cleanup-report.md
+
+# Python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
